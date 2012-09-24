@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+
+    <property id="isMultistage" value="false"/>
+    <property id="type" value="rng"/>
+    <property id="assetsPath" value="slot/01/"/>
+    <property id="background" value="miscellaneous/mainbackground.png"/>
+    <property id="gameID" value="1387126"/>
+    <property id="assetsFile" value="slotAssets_mini.swf"/>
+    <property id="symbolsTexture" value="symbols/symbolsAssets.png"/>
+    <property id="symbolsTextureInfo" value="symbols/symbolsAssets.xml"/>
+    <property id="gridInfo" value="9|6"/>
+    <property id="reverseProxy" value="http://www.actionscript.it"/>
+
+    <property id='transitions'>
+        <transition id='reel' duration='5' random='true' speed = '20' easing = 'com.greensock.easing.Back' ease='easeOut' plugin='com.greensock.TweenMax'/>
+        <transition id='winningSymbol' duration='2' random='false' easing = '' ease='EASE_IN' plugin=''/>
+        <transition id='winningLine' duration='2' random='false' easing = '' ease='EASE_IN' plugin=''/>
+    </property>
+</config>

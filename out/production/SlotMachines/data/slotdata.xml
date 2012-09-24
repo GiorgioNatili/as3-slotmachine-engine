@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<INIT NUMREELS="9" NUMLINES="20" NUMROWS="2" >
+
+    <COMB ID="1" NAME="AAAAA" ODD="12345" />
+    <COMB ID="2" NAME="GAJES" ODD="12345" />
+    <COMB ID="3" NAME="UWTGS" ODD="12345" />
+    <COMB ID="4" NAME="GDANE" ODD="12345" />
+    <COMB ID="5" NAME="OWQIE" ODD="12345" />
+
+
+    <REEL ID="1" SEQ="A,S,D,G,A,K,T,C,S,T,A,K,L,Q,A,S,D,G,A,K,T,C,S,T,A,K,L,Q,A,S,D,G,A,K,T,C,S,T,A,K,L,Q,A,S,D,G,A,K,T,C,S,T,A,K,L,Q" />
+    <REEL ID="2" SEQ="C,V,G,G,A,K,T,C,S,T,A,K,L,Q,U,O,P,G,A,K,T,C,S,T,A,K,L,Q,U,O,P,G,A,K,T,C,S,T,A,K,L,Q,U,O,P,G,A,K,T,C,S,T,A,K,L,Q" />
+
+    <REEL ID="3" SEQ="U,O,P,G,A,K,T,C,S,T,A,K,L,Q,C,V,G,G,A,K,T,C,S,T,A,K,L,Q,C,V,G,G,A,K,T,C,S,T,A,K,L,Q,C,V,G,G,A,K,T,C,S,T,A,K,L,Q" />
+    <REEL ID="4" SEQ="F,T,Z,G,A,K,T,C,S,T,A,K,L,Q,Q,T,Y,G,A,K,T,C,S,T,A,K,L,Q,Q,T,Y,G,A,K,T,C,S,T,A,K,L,Q,Q,T,Y,G,A,K,T,C,S,T,A,K,L,Q" />
+    <REEL ID="5" SEQ="U,I,O,G,A,K,T,C,S,T,A,K,L,Q,U,O,P,G,A,K,T,C,S,T,A,K,L,Q,U,O,P,G,A,K,T,C,S,T,A,K,L,Q,U,O,P,G,A,K,T,C,S,T,A,K,L,Q" />
+    <REEL ID="6" SEQ="Q,T,Y,G,A,K,T,C,S,T,A,K,L,Q,F,T,Z,G,A,K,T,C,S,T,A,K,L,Q,F,T,Z,G,A,K,T,C,S,T,A,K,L,Q,F,T,Z,G,A,K,T,C,S,T,A,K,L,Q" />
+    <REEL ID="7" SEQ="A,S,D,G,A,K,T,C,S,T,A,K,L,Q,A,S,D,G,A,K,T,C,S,T,A,K,L,Q,A,S,D,G,A,K,T,C,S,T,A,K,L,Q,A,S,D,G,A,K,T,C,S,T,A,K,L,Q" />
+    <REEL ID="8" SEQ="C,V,G,G,A,K,T,C,S,T,A,K,L,Q,U,O,P,G,A,K,T,C,S,T,A,K,L,Q,U,O,P,G,A,K,T,C,S,T,A,K,L,Q,U,O,P,G,A,K,T,C,S,T,A,K,L,Q" />
+    <REEL ID="9" SEQ="U,O,P,G,A,K,T,C,S,T,A,K,L,Q,C,V,G,G,A,K,T,C,S,T,A,K,L,Q,C,V,G,G,A,K,T,C,S,T,A,K,L,Q,C,V,G,G,A,K,T,C,S,T,A,K,L,Q" />
+
+    <WINLINES COORD="12,23,34,41,51,64,72,81,94~12,21,34,41,51,64,72,81,94~12,21,34,41,51,64,72,81,94~12,21,31,41,51,64,71,81,94~12,21,34,41,51,64,72,81,92~12,21,34,41,51,61,72,81,94~12,21,34,41,51,62,72,81,94~12,21,34,43,51,64,72,81,94~12,21,34,41,51,64,72,82,94"
+              />
+
+    <BONUS ID="1" MOLT="100,200,300" IDCOMB="5" />
+
+</INIT>

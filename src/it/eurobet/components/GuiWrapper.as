@@ -1,0 +1,1 @@
+﻿/** * Created with IntelliJ IDEA. * User: giorgionatili * Date: 6/15/12 * Time: 1:38 PM * To change this template use File | Settings | File Templates. */package it.eurobet.components {	import com.gnstudio.nabiro.flash.components.SmartSprite;public class GuiWrapper extends SmartSprite {    public function GuiWrapper() {        trace('hello moto')    }}}

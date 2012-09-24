@@ -1,0 +1,133 @@
+::::::::: Nabiro RC1 Releases notes ::::::::: 
+
+-------------------------------------------------------
+
+	Version: 							0.9005
+	Release date:						03/07/2009
+	Relevant changes: 					none
+	Known compatibility issues:			none
+	Possible compatibility issues:		none
+	
+-------------------------------------------------------
+-------------------------------------------------------
+
+	Version: 							0.9012
+	Release date:						03/07/2009
+	Relevant changes: 					divided in different packages
+	Known compatibility issues:			none
+	Possible compatibility issues:		none
+	Released swcs:						http://agile.gnstudio.com/nabiro/wiki/Nabiro_SWC_releseas
+	
+-------------------------------------------------------
+-------------------------------------------------------
+
+	Version: 							0.9016
+	Release date:						09/07/2009
+	Relevant changes: 					measurement support and AlertDialog style support
+	Known compatibility issues:			none
+	Possible compatibility issues:		none
+	Released swcs:						http://agile.gnstudio.com/nabiro/wiki/Nabiro_SWC_releseas
+	
+-------------------------------------------------------
+-------------------------------------------------------
+
+	Version: 							0.9018
+	Release date:						12/07/2009
+	Relevant changes: 					conversion utils
+	Known compatibility issues:			none
+	Possible compatibility issues:		none
+	Released swcs:						http://agile.gnstudio.com/nabiro/wiki/Nabiro_SWC_releseas
+	
+-------------------------------------------------------
+-------------------------------------------------------
+
+	Version: 							0.9025
+	Release date:						5/09/2009
+	Relevant changes: 					DestinationAwareCollection result event mapping
+	Known compatibility issues:			none
+	Possible compatibility issues:		none
+	Released swcs:						http://agile.gnstudio.com/nabiro/wiki/Nabiro_SWC_releseas
+	
+-------------------------------------------------------
+-------------------------------------------------------
+
+	Version: 							0.9017
+	Release date:						17/09/2009
+	Relevant changes: 					MapperManager class
+	Known compatibility issues:			none
+	Possible compatibility issues:		none
+	Released swcs:						http://agile.gnstudio.com/nabiro/wiki/Nabiro_SWC_releseas
+	
+-------------------------------------------------------
+-------------------------------------------------------
+
+	Version: 							0.90171
+	Release date:						17/09/2009
+	Relevant changes: 					ServiceSelectorHelp class
+	Known compatibility issues:			none
+	Possible compatibility issues:		none
+	Released swcs:						http://agile.gnstudio.com/nabiro/wiki/Nabiro_SWC_releseas
+	
+-------------------------------------------------------
+
+-------------------------------------------------------
+-------------------------------------------------------
+
+	Version: 							0.9036
+	Release date:						19/09/2009
+	Relevant changes: 					SQLConnectionHash class
+	Known compatibility issues:			none
+	Possible compatibility issues:		none
+	Released swcs:						http://agile.gnstudio.com/nabiro/wiki/Nabiro_SWC_releseas
+	
+-------------------------------------------------------
+-------------------------------------------------------
+
+	Version: 							0.9038
+	Release date:						21/09/2009
+	Relevant changes: 					WindowsBridge class
+	Known compatibility issues:			none
+	Possible compatibility issues:		none
+	Released swcs:						http://agile.gnstudio.com/nabiro/wiki/Nabiro_SWC_releseas
+	
+-------------------------------------------------------
+-------------------------------------------------------
+
+	Version: 							0.9040
+	Release date:						27/09/2009
+	Relevant changes: 					SmartPopupManager global parent
+	Known compatibility issues:			none
+	Possible compatibility issues:		none
+	Released swcs:						http://agile.gnstudio.com/nabiro/wiki/Nabiro_SWC_releseas
+	
+-------------------------------------------------------
+-------------------------------------------------------
+
+	Version: 							0.9060
+	Release date:						13/10/2009
+	Relevant changes: 					Mock object dyanmic generation
+	Known compatibility issues:			none
+	Possible compatibility issues:		none
+	Released swcs:						http://agile.gnstudio.com/nabiro/wiki/Nabiro_SWC_releseas
+	
+-------------------------------------------------------
+-------------------------------------------------------
+
+	Version: 							0.9070
+	Release date:						19/10/2009
+	Relevant changes: 					PicoContainer implementation
+	Known compatibility issues:			none
+	Possible compatibility issues:		none
+	Released swcs:						http://agile.gnstudio.com/nabiro/wiki/Nabiro_SWC_releseas
+	
+-------------------------------------------------------
+-------------------------------------------------------
+
+	Version: 							0.9080
+	Release date:						27/10/2009
+	Relevant changes: 					PNGSize and deepCopy of objects
+	Known compatibility issues:			none
+	Possible compatibility issues:		none
+	Released swcs:						http://agile.gnstudio.com/nabiro/wiki/Nabiro_SWC_releseas
+	
+-------------------------------------------------------
