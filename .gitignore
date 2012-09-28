@@ -52,3 +52,7 @@ out/production/EurobetSlot/com/gnstudio/nabiro/air/data/dbschema.xsd
 out/production/EurobetSlot/com/gnstudio/nabiro/ui/vo/SmartRenderData.jpg
 
 out/production/EurobetSlot/version.txt
+
+out/production/SlotMachines/data/slotconfig.xml
+
+out/production/SlotMachines/SlotMachines.swf
