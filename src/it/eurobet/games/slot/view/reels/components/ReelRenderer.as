@@ -57,7 +57,7 @@ package it.eurobet.games.slot.view.reels.components {
     private var cleaner:CleanAndCloneItems;
 
     private var spinReelData:SpinReelData;
-    private const CONTAINERS_TO_RENDER:int = 4;
+    private const CONTAINERS_TO_RENDER:int = 3;
 
 
     public function ReelRenderer(data:TexturesLoader) {
@@ -126,11 +126,11 @@ package it.eurobet.games.slot.view.reels.components {
         statusToCheck = ReelItemContainer.IS_MOVING;
         var moving:Vector.<ReelItemContainer> = movingContainers.filter(recoverItems);
 
-        if(queued.length > 0){
+        if(queued.length > 0 && moving.length < itemsToMove(moving[0])){
 
-            queued[0].y = moving[0].y - queued[0].height;
+            queued[0].y = moving[moving.length - 1].y - queued[0].height;
             queued[0].dispatchEvent(new ReelPhase(ReelPhase.INIT_MOVING));
-            trace('adasda dasd asd asd asda ', queued.length, moving[0].y,  moving[moving.length - 1].y)
+            trace('Playing with the queue ', moving.length + '|' + queued.length, moving[0].y,  moving[moving.length - 1].y)
 
         }else if(paused.length > 0){
 
@@ -141,26 +141,6 @@ package it.eurobet.games.slot.view.reels.components {
             }
 
         }
-
-        // trace('=========================', paused.length, moving.length)
-
-        /*var limit:int = movingContainers.length;
-
-        for(var i:int = 0; i < limit; i++){
-
-            var container:ReelItemContainer = movingContainers[i];
-            var startingY:Number = - container.height;
-
-            if(!container.status){
-
-                container.dispatchEvent(new ReelPhase(ReelPhase.MOVING, false, startingY));
-
-            }
-            break;
-
-        }
-
-        queuedIndexes = new Vector.<int>();*/
 
     }
 
@@ -199,21 +179,19 @@ package it.eurobet.games.slot.view.reels.components {
         initialContainer.y = targetY;
         addChild(initialContainer);
 
-        var container:ReelItemContainer
+        var container:ReelItemContainer;
         var limit:int = CONTAINERS_TO_RENDER;
 
-        for(var i:int = 0; i < limit; i++){
+        for(var i:int = 0; i <= limit; i++){
 
             container = createMovingContainer();
 
             container.limit = _gridHeight;
-            container.y = initialContainer.y - container.height//- (lastContainer.y + lastContainer.height) || 0;
 
-         //   if(i == 0){
+            // All the moving containers can stay the same y because the movement can start from the same position;
+            container.y = initialContainer.y - container.height;
 
-                container.processQueue = true;
-
-          //  }
+            container.processQueue = true;
 
             movingContainers.push(container);
 
@@ -228,7 +206,7 @@ package it.eurobet.games.slot.view.reels.components {
 
         addChild(winningContainer);
 
-        // The main animation of each reel can start
+        // The main animation of each reel can start, first propagates the config data then init the movement
         _origin.dispatchEvent(new SlotInstructionEvent('AnimateRenderData', [_gridHeight, reelTransition, _id, int(_gridHeight / container.height) + 1]));
 
         initialContainer.dispatchEvent(new ReelPhase(ReelPhase.INIT_MOVING));

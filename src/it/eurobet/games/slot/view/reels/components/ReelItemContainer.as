@@ -105,6 +105,7 @@ package it.eurobet.games.slot.view.reels.components {
         override protected function init():void {
 
             super.init();
+
             drawReelItems();
 
         }
