@@ -12,8 +12,10 @@ package it.eurobet.games.slot.view.reels.components {
     import com.greensock.TweenMax;
 
     import flash.display.DisplayObject;
+    import flash.events.TimerEvent;
     import flash.trace.Trace;
     import flash.utils.Dictionary;
+    import flash.utils.Timer;
 
     import it.eurobet.components.Symbol;
     import it.eurobet.core.IWillBeObserved;
@@ -58,7 +60,7 @@ package it.eurobet.games.slot.view.reels.components {
 
     private var spinReelData:SpinReelData;
     private const CONTAINERS_TO_RENDER:int = 3;
-
+    private var _timer:Timer;
 
     public function ReelRenderer(data:TexturesLoader) {
 
@@ -89,6 +91,42 @@ package it.eurobet.games.slot.view.reels.components {
             }
 
             count++;
+
+        }
+
+    }
+
+    private function initEndAnimation(event:TimerEvent):void {
+
+        trace('ora esegui', lastContainer.y)
+
+        trace('>>>>>>>>', getChildAt(numChildren - 1).y, movingContainers[movingContainers.length - 1].y)
+
+        winningContainer.y = movingContainers[movingContainers.length - 1].y - winningContainer.height;
+        winningContainer.dispatchEvent(new ReelPhase(ReelPhase.END_MOVING));
+
+        var currentY:int = 0;
+
+        for each(var headingItem:String in spinReelData.heading){
+
+            if(winningContainer){
+
+                currentY = winningContainer.y + winningContainer.height + DELTA;
+
+            }
+
+            var symbol:Symbol = new Symbol(textures.getTextureByName(headingItem));
+
+            var reelItem:ReelItem = new ReelItem(headingItem,  symbol);
+            reelItem.y = currentY;
+
+           // addChild(reelItem);
+
+        }
+
+        for each(var item:ReelItemContainer in movingContainers){
+
+            item.remove();
 
         }
 
@@ -174,6 +212,23 @@ package it.eurobet.games.slot.view.reels.components {
 
     }
 
+    private function resetTimer():void {
+
+        if (_timer) {
+
+            if (_timer.running) {
+
+                _timer.stop();
+                _timer.removeEventListener(TimerEvent.TIMER_COMPLETE, initEndAnimation);
+
+            }
+
+            _timer = null;
+
+        }
+
+    }
+
     private function initTweenCompleted():void {
 
         initialContainer.y = targetY;
@@ -209,6 +264,10 @@ package it.eurobet.games.slot.view.reels.components {
         // The main animation of each reel can start, first propagates the config data then init the movement
         _origin.dispatchEvent(new SlotInstructionEvent('AnimateRenderData', [_gridHeight, reelTransition, _id, int(_gridHeight / container.height) + 1]));
 
+        // Reset and restart the timer that states when the end animation has to start
+        resetTimer();
+        initTimer();
+
         initialContainer.dispatchEvent(new ReelPhase(ReelPhase.INIT_MOVING));
 
         var count:int = 0;
@@ -223,6 +282,15 @@ package it.eurobet.games.slot.view.reels.components {
             count++;
 
         }
+
+    }
+
+    private function initTimer():void{
+
+        _timer = new Timer(reelTransition.minDuration * 1000, 1);
+
+        _timer.addEventListener(TimerEvent.TIMER_COMPLETE, initEndAnimation);
+        _timer.start();
 
     }
 

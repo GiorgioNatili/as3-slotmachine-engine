@@ -13,7 +13,7 @@
     <property id="reverseProxy" value="http://www.actionscript.it"/>
 
     <property id='transitions'>
-        <transition id='reel' duration='5' random='true' speed = '20' easing = 'com.greensock.easing.Back' ease='easeOut' plugin='com.greensock.TweenMax'/>
+        <transition id='reel' duration='2' random='true' speed = '10' easing = 'com.greensock.easing.Back' ease='easeOut' plugin='com.greensock.TweenMax'/>
         <transition id='winningSymbol' duration='2' random='false' easing = '' ease='EASE_IN' plugin=''/>
         <transition id='winningLine' duration='2' random='false' easing = '' ease='EASE_IN' plugin=''/>
     </property>

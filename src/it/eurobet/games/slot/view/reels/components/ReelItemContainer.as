@@ -34,6 +34,7 @@ package it.eurobet.games.slot.view.reels.components {
         public static const IS_MOVING:String = 'isMoving';
         public static const IS_QUEUED:String = 'isQueued';
         public static const IS_PAUSED:String = 'isPaused';
+        private var _itemDirty:Boolean;
 
         public function ReelItemContainer(items:Vector.<ReelItem>) {
 
@@ -44,6 +45,25 @@ package it.eurobet.games.slot.view.reels.components {
             addEventListener(AnimateRenderData.DO_HANDLE, onAnimateRenderer);
             addEventListener(ReelPhase.MOVING, onReStartMoving);
             addEventListener(ReelPhase.INIT_MOVING, initMoving);
+            addEventListener(ReelPhase.END_MOVING, onEndMoving);
+
+        }
+
+        private function onEndMoving(event:ReelPhase):void {
+
+            addEventListener(Event.ENTER_FRAME, endMoving);
+
+        }
+
+        private function endMoving(event:Event):void {
+
+            this.y += speed;
+
+            if (this.y > _limit - height) {
+
+                removeEventListener(Event.ENTER_FRAME, endMoving);
+
+            }
 
         }
 
@@ -85,7 +105,7 @@ package it.eurobet.games.slot.view.reels.components {
 
             this.y += speed;
 
-            if (this.y > _limit - height) {
+            if (this.y > _limit - height && !_itemDirty) {
 
                 dispatchEvent(new ReelPhase(ReelPhase.PROCESS_QUEUE));
 
@@ -96,9 +116,32 @@ package it.eurobet.games.slot.view.reels.components {
                 _status = IS_PAUSED;
                 visible = false;
                 removeEventListener(Event.ENTER_FRAME, onMoving);
-                dispatchEvent(new ReelPhase(ReelPhase.PROCESS_QUEUE));
+
+                if(_itemDirty){
+
+                    visible = false;
+                    removeFromParent(true);
+
+                }else{
+
+                    dispatchEvent(new ReelPhase(ReelPhase.PROCESS_QUEUE));
+
+                }
 
             }
+
+        }
+
+        public function remove():void{
+
+            _itemDirty = true;
+
+        }
+
+        public function removeNow():void{
+
+            removeEventListener(Event.ENTER_FRAME, onMoving);
+            removeFromParent(true);
 
         }
 

@@ -109,7 +109,7 @@ package it.eurobet.games.slot {
                 item.x = 100 + (Math.random() * stage.width);
                 item.y = 100 + (Math.random() * stage.height);
 
-                addChild(item);
+                // addChild(item);
 
             }
 
@@ -134,9 +134,11 @@ package it.eurobet.games.slot {
         private function onDataReady(event:DataEvent):void {
 
             event.target.removeEventListener(event.type, arguments.callee);
+
             // reels
             // winning lise
             // grid info
+
             var assets:AssetsLoader = new AssetsLoader(appConfig.assetsPath + appConfig.assetsFile);
 
             assets.addEventListener(AssetsEvent.ASSETS_READY, onAssetsReady);

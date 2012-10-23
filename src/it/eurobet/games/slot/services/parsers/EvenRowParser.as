@@ -16,6 +16,20 @@ public class EvenRowParser extends RowParser{
 
     }
 
+    override public function getWinningSymbols(data:Array, index:int, tot:int):Vector.<String> {
+
+        var value:Vector.<String> = new Vector.<String>();
+
+        for(var i:int = index; i < (index + tot); i++){
+
+            value.push(data[i]);
+
+        }
+
+        return value;
+
+    }
+
     override public function getWinningSequence(data:Array, index:int, tot:int):Vector.<String>{
 
         var value:Vector.<String> = new Vector.<String>();

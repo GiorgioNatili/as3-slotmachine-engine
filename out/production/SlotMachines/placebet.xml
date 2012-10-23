@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<PLACEBET CODE="0" CUSTOMER="111111" DRAW="1913382"
+          BALANCE="99800" RESULT="A,D,E,D,B,G,G,C,A,F,A,B,E,G,F,A,D,E,D,B,G,G,C,A,F,A,B,E,G,F"
+          WINAMT="100">      <!-- G,F,A,D,E,D,D,B,G,G,C,A -->
+    <WINLINE ID="4" COMB="7" WINAMT="20" />
+    <BONUS ID="26" COORD="11,22,33,42" />
+</PLACEBET>

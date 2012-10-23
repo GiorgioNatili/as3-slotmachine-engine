@@ -9,8 +9,11 @@ package it.eurobet.games.slot.view.slot {
 
     import it.eurobet.core.IStarlingView;
     import it.eurobet.core.Presenter;
+    import it.eurobet.games.slot.events.DataEvent;
+    import it.eurobet.games.slot.events.PlaceBetData;
     import it.eurobet.games.slot.events.SlotInstructionEvent;
     import it.eurobet.games.slot.instructions.InitSlot;
+    import it.eurobet.games.slot.services.PlaceBetProvider;
 
     internal class Slot extends Presenter{
 
@@ -38,7 +41,28 @@ package it.eurobet.games.slot.view.slot {
 
         public function spin():void {
 
-            _origin.dispatchEvent(new SlotInstructionEvent('SpinReels'));
+            var placeBet:PlaceBetProvider = new PlaceBetProvider('placebet.xml');
+
+            placeBet.addEventListener(PlaceBetData.READY, onPlaceBetDataReady);
+            placeBet.addEventListener(PlaceBetData.FAULT, onPlaceBetDataFault);
+
+            placeBet.load();
+
+        }
+
+        private function onPlaceBetDataFault(event:PlaceBetData):void {
+
+            event.target.removeEventListener(event.type, arguments.callee);
+
+           trace('Data are not loaded from the SPIN');
+
+        }
+
+        private function onPlaceBetDataReady(event:PlaceBetData):void {
+
+            event.target.removeEventListener(event.type, arguments.callee);
+
+            _origin.dispatchEvent(new SlotInstructionEvent('SpinReels', (event.target as PlaceBetProvider).winningItems));
 
         }
 

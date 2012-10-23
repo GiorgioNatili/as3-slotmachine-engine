@@ -25,7 +25,7 @@ internal class RowParser implements IProcessSequence{
 
     public function getWinningSequence(raw:Array, index:int, tot:int):Vector.<String> {
 
-        return null;
+        throw new Error('\tError: Override the "getWinningSequence" in the child class.');
 
     }
 
@@ -90,7 +90,11 @@ internal class RowParser implements IProcessSequence{
 
     }
 
+    public function getWinningSymbols(raw:Array, index:int, tot:int):Vector.<String> {
 
+        throw new Error('\tError: Override the "getWinningSymbols" in the child class.');
+
+    }
 
     protected function getStartIndex(index:int, shift:int, items:int):int{
 

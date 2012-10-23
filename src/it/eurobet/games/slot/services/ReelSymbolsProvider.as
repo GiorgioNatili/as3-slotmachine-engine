@@ -17,13 +17,16 @@ public class ReelSymbolsProvider {
     private var symbolsParser:IProcessSequence;
     private var rawValue:String;
     private var _parsedValue:Array;
+
+    private var winningSymbols:Array;
     private var winningIndex:int;
     private var winningItems:int;
 
-    public function ReelSymbolsProvider(parser:IProcessSequence, value:String) {
+    public function ReelSymbolsProvider(parser:IProcessSequence, value:String, winning:Array) {
 
         symbolsParser = parser;
         rawValue = value;
+        winningSymbols = winning;
 
     }
 
@@ -70,7 +73,7 @@ public class ReelSymbolsProvider {
         winningIndex = index;
         winningItems = tot;
 
-        return symbolsParser.getWinningSequence(parsedValue, winningIndex, winningItems);
+        return symbolsParser.getWinningSymbols(winningSymbols, winningIndex, winningItems);
 
     }
 

@@ -49,6 +49,7 @@ package it.eurobet.games.slot.view.reels {
     private var timer:Timer;
     private var _reelDistance:int;
     private const SYMBOL_HEIGHT:int = 120;
+    private var winningSymbols:Array;
 
     public function Reels(v:IStarlingView) {
 
@@ -61,13 +62,15 @@ package it.eurobet.games.slot.view.reels {
 
     }
 
-    private function onUpdateReels(event:UpdateReels):void {
+    private function onUpdateReels(instruction:UpdateReels):void {
 
         updateReels();
 
     }
 
-    private function onSpinReels(event:SpinReels):void {
+    private function onSpinReels(instruction:SpinReels):void {
+
+        winningSymbols = instruction.parameters;
 
         spin();
 
@@ -100,7 +103,7 @@ package it.eurobet.games.slot.view.reels {
 
         for each(var reel:Reel in currentReels){
 
-            var reelProvider:ReelSymbolsProvider = new ReelSymbolsProvider(parser, reel.sequence);
+            var reelProvider:ReelSymbolsProvider = new ReelSymbolsProvider(parser, reel.sequence, winningSymbols);
 
             view.addReel(reelProvider.currents(grid.rows), new Point((reelDistance * count) + MARGIN, 40), grid.rows * SYMBOL_HEIGHT);
             count++;
@@ -150,19 +153,23 @@ package it.eurobet.games.slot.view.reels {
     private function spin():void {
 
         var tot:int = currentReels.length;
+        var winningCount:int = 0;
 
         for (var i:int = 0; i < tot; i++){
 
             var parser:IProcessSequence = getParser();
-            var reelProvider:ReelSymbolsProvider = new ReelSymbolsProvider(parser, currentReels[i].sequence);
+            var reelProvider:ReelSymbolsProvider = new ReelSymbolsProvider(parser, currentReels[i].sequence, winningSymbols);
 
             var random:int = new RandomGenerator(reelProvider.all.length).random;
 
             var value:SpinReelData = new SpinReelData();
 
-            value.winning = reelProvider.winning(random, grid.rows);
+            value.winning = reelProvider.winning(winningCount, grid.rows);
             value.moving = reelProvider.moving;
             value.heading = reelProvider.currents(2);
+
+            winningCount += grid.rows;
+            winningCount -= 1;
 
             /* trace('rnd', random)
             trace('---', reelProvider.winning(random, grid.rows));
@@ -172,6 +179,8 @@ package it.eurobet.games.slot.view.reels {
             */
 
             view.spinReel(i, value);
+
+            trace('winning -> ' + value.winning);
 
         }
 
@@ -187,7 +196,7 @@ package it.eurobet.games.slot.view.reels {
 
         for each(var reel:Reel in currentReels){
 
-            var reelProvider:ReelSymbolsProvider = new ReelSymbolsProvider(parser, reel.sequence);
+            var reelProvider:ReelSymbolsProvider = new ReelSymbolsProvider(parser, reel.sequence, winningSymbols);
             view.updateReelValue(count, reelProvider.currents(grid.rows));
 
             count++;

@@ -14,6 +14,7 @@ public class DataEvent extends Event{
     public static const CONFIG_FAULT:String = "onConfigFault";
     public static const DATA_READY:String = "onDataReady";
     public static const DATA_FAULT:String = "onDataFault";
+    public static const BET_DATA_FAULT:String = "onBetDataFault";
 
     public function DataEvent(type:String, bubbles:Boolean=true, cancelable:Boolean=false) {
 

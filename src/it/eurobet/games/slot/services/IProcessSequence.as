@@ -11,6 +11,7 @@ public interface IProcessSequence {
 
     function getSymbols(raw:Array, max:int = int.MAX_VALUE):Vector.<String>;
     function getWinningSequence(raw:Array, index:int, tot:int):Vector.<String>;
+    function getWinningSymbols(raw:Array, index:int, tot:int):Vector.<String>;
     function getMovingSequence(raw:Array, tot:int):Vector.<String>;
 
 

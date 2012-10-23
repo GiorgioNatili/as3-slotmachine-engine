@@ -15,6 +15,7 @@ package it.eurobet.games.slot.view.reels.events {
         public static const PROCESS_QUEUE:String = 'onProcessTheQueue';
         public static const MOVING:String = 'onMoving';
         public static const INIT_MOVING:String = 'onInitMoving';
+        public static const END_MOVING:String = 'onEndMoving';
 
         public var startingY:Number;
 

@@ -14,6 +14,20 @@ public class OddRowParser extends RowParser{
 
     }
 
+    override public function getWinningSymbols(data:Array, index:int, tot:int):Vector.<String> {
+
+        var value:Vector.<String> = new Vector.<String>(tot);
+
+        for(var i:int = index; i < tot; i++){
+
+            value.push(data[i]);
+
+        }
+
+        return value;
+
+    }
+
     override public function getWinningSequence(data:Array, index:int, tot:int):Vector.<String>{
 
         var value:Vector.<String> = new Vector.<String>();
