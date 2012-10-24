@@ -30,6 +30,7 @@ package it.eurobet.games.slot.view.reels.components {
         private var minDuration:int;
         private var _processQueue:Boolean;
         private var _status:String;
+        private var _id:String;
 
         public static const IS_MOVING:String = 'isMoving';
         public static const IS_QUEUED:String = 'isQueued';
@@ -51,6 +52,7 @@ package it.eurobet.games.slot.view.reels.components {
 
         private function onEndMoving(event:ReelPhase):void {
 
+            alpha = .5;
             addEventListener(Event.ENTER_FRAME, endMoving);
 
         }
@@ -77,6 +79,8 @@ package it.eurobet.games.slot.view.reels.components {
 
         private function initMoving(event:ReelPhase):void{
 
+
+            trace(ReelPhase.INIT_MOVING, _id)
             _status = IS_MOVING;
             addEventListener(Event.ENTER_FRAME, onMoving);
 
@@ -119,6 +123,9 @@ package it.eurobet.games.slot.view.reels.components {
 
                 if(_itemDirty){
 
+                    trace(ReelPhase.REMOVE_FROM_QUEUE, _id)
+                    dispatchEvent(new ReelPhase(ReelPhase.REMOVE_FROM_QUEUE));
+
                     visible = false;
                     removeFromParent(true);
 
@@ -127,6 +134,20 @@ package it.eurobet.games.slot.view.reels.components {
                     dispatchEvent(new ReelPhase(ReelPhase.PROCESS_QUEUE));
 
                 }
+
+            }
+
+        }
+
+        public function pause(toggle:Boolean = true):void{
+
+            if(toggle){
+
+                removeEventListener(Event.ENTER_FRAME, onMoving);
+
+            }else{
+
+                addEventListener(Event.ENTER_FRAME, onMoving);
 
             }
 
@@ -141,6 +162,8 @@ package it.eurobet.games.slot.view.reels.components {
         public function removeNow():void{
 
             removeEventListener(Event.ENTER_FRAME, onMoving);
+            dispatchEvent(new ReelPhase(ReelPhase.REMOVE_FROM_QUEUE));
+
             removeFromParent(true);
 
         }
@@ -236,6 +259,14 @@ package it.eurobet.games.slot.view.reels.components {
 
             _processQueue = value;
 
+        }
+
+        public function get id():String {
+            return _id;
+        }
+
+        public function set id(value:String):void {
+            _id = value;
         }
     }
 

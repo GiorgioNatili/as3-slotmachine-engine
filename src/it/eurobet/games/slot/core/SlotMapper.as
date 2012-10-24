@@ -45,7 +45,7 @@ public class SlotMapper extends Mapper{
 
     override protected function onInstruction(e:*):void {
 
-        trace('overridden onInstruction', e);
+        // trace('overridden onInstruction', e);
 
         if(e.isPreventable && e.currentTarget is ModalWindow){
 

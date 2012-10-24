@@ -25,7 +25,7 @@ package it.eurobet.games.slot.events {
 
         super(base + instruction, params, preventable, bubbles);
 
-        trace("Instruction initialized", toPerform);
+        // trace("Instruction initialized", toPerform);
 
     }
 

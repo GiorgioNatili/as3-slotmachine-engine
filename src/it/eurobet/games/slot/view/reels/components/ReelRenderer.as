@@ -26,6 +26,7 @@ package it.eurobet.games.slot.view.reels.components {
     import it.eurobet.games.slot.model.vos.SpinReelData;
     import it.eurobet.games.slot.model.vos.TweenDescription;
     import it.eurobet.games.slot.view.reels.components.ReelItem;
+    import it.eurobet.games.slot.view.reels.components.ReelItemContainer;
     import it.eurobet.games.slot.view.reels.events.ReelPhase;
     import it.eurobet.games.slot.view.reels.events.ReelsStatus;
     import it.eurobet.games.slot.view.reels.helpers.CleanAndCloneItems;
@@ -36,6 +37,7 @@ package it.eurobet.games.slot.view.reels.components {
     public class ReelRenderer extends SmartStarlingSprite implements IWillBeObserved{
 
     private const DELTA:int = 0;
+    private const TOLERANCE:int = 100;
 
     private var reelItems:Dictionary;
 
@@ -74,6 +76,35 @@ package it.eurobet.games.slot.view.reels.components {
         addEventListener(AnimateReels.DO_HANDLE, onAnimateReels);
         addEventListener(ReelPhase.ADDED_TO_QUEUE, onCandidateReceived);
         addEventListener(ReelPhase.PROCESS_QUEUE, onProcessQueue);
+        addEventListener(ReelPhase.REMOVE_FROM_QUEUE, onRemoveCandidate);
+
+    }
+
+    private function onRemoveCandidate(event:ReelPhase):void {
+
+        var count:int = 0;
+
+        for each(var item:ReelItemContainer in movingContainers){
+
+            // trace(":::::::::::::::", item.id, (event.target as ReelItemContainer).id);
+
+            if(item == event.target){
+
+                movingContainers.splice(count, 1);
+                break;
+
+            }
+
+            count++;
+
+        }
+
+        if(movingContainers.length <= 1){
+
+            winningContainer.y = -winningContainer.height;
+            winningContainer.dispatchEvent(new ReelPhase(ReelPhase.END_MOVING));
+
+        }
 
     }
 
@@ -98,12 +129,13 @@ package it.eurobet.games.slot.view.reels.components {
 
     private function initEndAnimation(event:TimerEvent):void {
 
-        trace('ora esegui', lastContainer.y)
+        event.target.removeEventListener(event.type, arguments.callee);
 
-        trace('>>>>>>>>', getChildAt(numChildren - 1).y, movingContainers[movingContainers.length - 1].y)
+    //    trace('ora esegui', lastContainer.y)
 
-        winningContainer.y = movingContainers[movingContainers.length - 1].y - winningContainer.height;
-        winningContainer.dispatchEvent(new ReelPhase(ReelPhase.END_MOVING));
+   //     trace('>>>>>>>>', getChildAt(numChildren - 1).y, movingContainers[movingContainers.length - 1].y)
+
+       /*
 
         var currentY:int = 0;
 
@@ -120,9 +152,11 @@ package it.eurobet.games.slot.view.reels.components {
             var reelItem:ReelItem = new ReelItem(headingItem,  symbol);
             reelItem.y = currentY;
 
-           // addChild(reelItem);
+           addChild(reelItem);
 
         }
+
+        */
 
         for each(var item:ReelItemContainer in movingContainers){
 
@@ -168,7 +202,7 @@ package it.eurobet.games.slot.view.reels.components {
 
             queued[0].y = moving[moving.length - 1].y - queued[0].height;
             queued[0].dispatchEvent(new ReelPhase(ReelPhase.INIT_MOVING));
-            trace('Playing with the queue ', moving.length + '|' + queued.length, moving[0].y,  moving[moving.length - 1].y)
+            // trace('Playing with the queue ', moving.length + '|' + queued.length, moving[0].y,  moving[moving.length - 1].y)
 
         }else if(paused.length > 0){
 
@@ -241,7 +275,8 @@ package it.eurobet.games.slot.view.reels.components {
 
             container = createMovingContainer();
 
-            container.limit = _gridHeight;
+            container.id = 'moving_' + i;
+            container.limit = _gridHeight - TOLERANCE;
 
             // All the moving containers can stay the same y because the movement can start from the same position;
             container.y = initialContainer.y - container.height;
@@ -271,15 +306,29 @@ package it.eurobet.games.slot.view.reels.components {
         initialContainer.dispatchEvent(new ReelPhase(ReelPhase.INIT_MOVING));
 
         var count:int = 0;
+        var neededItems:int = itemsToMove(container);
+
         for each(var item:ReelItemContainer in movingContainers){
 
-            if(count < itemsToMove(container)){
+            if(count < neededItems){
 
-                container.dispatchEvent(new ReelPhase(ReelPhase.INIT_MOVING));
+                movingContainers[count].dispatchEvent(new ReelPhase(ReelPhase.INIT_MOVING));
+                count++;
 
             }
 
-            count++;
+        }
+
+        var itemsToRemove:Vector.<ReelItemContainer> = movingContainers.splice(count,  movingContainers.length - neededItems);
+        removeReels(itemsToRemove);
+
+    }
+
+    private function removeReels(value:Vector.<ReelItemContainer>):void{
+
+        for each(var item:ReelItemContainer in value){
+
+            removeChild(item);
 
         }
 
@@ -389,6 +438,7 @@ package it.eurobet.games.slot.view.reels.components {
 
             reelItem = new ReelItem(moveItem, moveSymbol);
             movingItems.push(reelItem);
+
         }
 
         return new ReelItemContainer(movingItems);
@@ -445,7 +495,7 @@ package it.eurobet.games.slot.view.reels.components {
 
     public function set spinData(value:SpinReelData):void{
 
-        trace(' SETTO I DATI NEL RENDERER');
+        // trace(' SETTO I DATI NEL RENDERER');
 
         spinReelData = value;
 

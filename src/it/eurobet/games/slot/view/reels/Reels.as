@@ -105,7 +105,8 @@ package it.eurobet.games.slot.view.reels {
 
             var reelProvider:ReelSymbolsProvider = new ReelSymbolsProvider(parser, reel.sequence, winningSymbols);
 
-            view.addReel(reelProvider.currents(grid.rows), new Point((reelDistance * count) + MARGIN, 40), grid.rows * SYMBOL_HEIGHT);
+            // From here you can control in which coordinates to add the reels
+            view.addReel(reelProvider.currents(grid.rows), new Point((reelDistance * count) + MARGIN, 10), grid.rows * SYMBOL_HEIGHT);
             count++;
 
         }

@@ -168,7 +168,7 @@ package it.eurobet.core {
             var ClassReference:Class = getDefinitionByName(e.toPerform) as Class;
             var instance:Object = new ClassReference(e.target, e.parameters);
 
-            trace('onInstruction', e.toPerform, elements);
+            // trace('onInstruction', e.toPerform, elements);
 
             for each (var item:IWillBeObserved in elements){
 

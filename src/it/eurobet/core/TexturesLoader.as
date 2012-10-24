@@ -150,7 +150,7 @@ package it.eurobet.core {
                // TODO Bring it back to error and remove the trace
                // throw new TextureErrors('The requested texture is not available, the method will return a random one.', 50);
 
-               trace('\n\t', 'The requested texture is not available, the method will return a random one.', '\n');
+               trace('\n\t', 'The requested texture "' + name + '" is not available, the method will return a random one.', '\n');
 
                var random:int = int(_availableTextures * Math.random());
                var items:XMLList = sourceInfo.SubTexture.@name;

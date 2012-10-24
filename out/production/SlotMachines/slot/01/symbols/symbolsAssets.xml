@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <TextureAtlas imagePath="symbolAssets.png">
-    <SubTexture name="bandiera" x="2" y="2" width="108" height="108"/>
-    <SubTexture name="bottiglia" x="112" y="2" width="108" height="108"/>
-    <SubTexture name="cannone" x="222" y="2" width="108" height="108"/>
-    <SubTexture name="isola" x="332" y="2" width="108" height="108"/>
-    <SubTexture name="mappa" x="2" y="112" width="108" height="108"/>
-    <SubTexture name="pala" x="112" y="112" width="108" height="108"/>
-    <SubTexture name="pappagallo" x="222" y="112" width="108" height="108"/>
-    <SubTexture name="sciabole" x="332" y="112" width="108" height="108"/>
-    <SubTexture name="tesoro" x="2" y="222" width="108" height="108"/>
-    <SubTexture name="uncino" x="112" y="222" width="108" height="108"/>
+    <SubTexture name="A" x="2" y="2" width="108" height="108"/>
+    <SubTexture name="B" x="112" y="2" width="108" height="108"/>
+    <SubTexture name="V" x="112" y="2" width="108" height="108"/>
+    <SubTexture name="C" x="222" y="2" width="108" height="108"/>
+    <SubTexture name="D" x="332" y="2" width="108" height="108"/>
+    <SubTexture name="O" x="332" y="2" width="108" height="108"/>
+    <SubTexture name="E" x="2" y="112" width="108" height="108"/>
+    <SubTexture name="F" x="112" y="112" width="108" height="108"/>
+    <SubTexture name="Z" x="112" y="112" width="108" height="108"/>
+    <SubTexture name="G" x="222" y="112" width="108" height="108"/>
+    <SubTexture name="I" x="222" y="112" width="108" height="108"/>
+    <SubTexture name="L" x="222" y="112" width="108" height="108"/>
+    <SubTexture name="K" x="332" y="112" width="108" height="108"/>
+    <SubTexture name="P" x="332" y="112" width="108" height="108"/>
+    <SubTexture name="U" x="332" y="112" width="108" height="108"/>
+    <SubTexture name="T" x="2" y="222" width="108" height="108"/>
+    <SubTexture name="S" x="112" y="222" width="108" height="108"/>
+    <SubTexture name="Q" x="112" y="222" width="108" height="108"/>
+    <SubTexture name="Y" x="112" y="222" width="108" height="108"/>
 </TextureAtlas>
