@@ -62,7 +62,9 @@ package it.eurobet.games.slot.view.reels.components {
 
     private var spinReelData:SpinReelData;
     private const CONTAINERS_TO_RENDER:int = 3;
+    private const ADDITIONAL_ITEMS:int = 2;
     private var _timer:Timer;
+    private var _itemsToMove:int;
 
     public function ReelRenderer(data:TexturesLoader) {
 
@@ -101,8 +103,7 @@ package it.eurobet.games.slot.view.reels.components {
 
         if(movingContainers.length <= 1){
 
-            winningContainer.y = -winningContainer.height;
-            winningContainer.dispatchEvent(new ReelPhase(ReelPhase.END_MOVING));
+            // Inject the final animation
 
         }
 
@@ -131,32 +132,8 @@ package it.eurobet.games.slot.view.reels.components {
 
         event.target.removeEventListener(event.type, arguments.callee);
 
-    //    trace('ora esegui', lastContainer.y)
-
-   //     trace('>>>>>>>>', getChildAt(numChildren - 1).y, movingContainers[movingContainers.length - 1].y)
-
-       /*
-
-        var currentY:int = 0;
-
-        for each(var headingItem:String in spinReelData.heading){
-
-            if(winningContainer){
-
-                currentY = winningContainer.y + winningContainer.height + DELTA;
-
-            }
-
-            var symbol:Symbol = new Symbol(textures.getTextureByName(headingItem));
-
-            var reelItem:ReelItem = new ReelItem(headingItem,  symbol);
-            reelItem.y = currentY;
-
-           addChild(reelItem);
-
-        }
-
-        */
+        winningContainer.y =  movingContainers[movingContainers.length - 1].y - winningContainer.height;
+        winningContainer.dispatchEvent(new ReelPhase(ReelPhase.END_MOVING));
 
         for each(var item:ReelItemContainer in movingContainers){
 
@@ -198,19 +175,14 @@ package it.eurobet.games.slot.view.reels.components {
         statusToCheck = ReelItemContainer.IS_MOVING;
         var moving:Vector.<ReelItemContainer> = movingContainers.filter(recoverItems);
 
-        if(queued.length > 0 && moving.length < itemsToMove(moving[0])){
+    //    trace('queued', queued.length);
+    //    trace('paused', paused.length);
+    //    trace('moving', moving.length);
+    //    trace('----')
 
-            queued[0].y = moving[moving.length - 1].y - queued[0].height;
-            queued[0].dispatchEvent(new ReelPhase(ReelPhase.INIT_MOVING));
-            // trace('Playing with the queue ', moving.length + '|' + queued.length, moving[0].y,  moving[moving.length - 1].y)
+        if(paused.length > 0 && moving.length < itemsToMove(moving[0])){
 
-        }else if(paused.length > 0){
-
-            if(moving.length < itemsToMove(moving[0])){
-
-                paused[0].dispatchEvent(new ReelPhase(ReelPhase.MOVING, false,  moving[0].y - paused[0].height));
-
-            }
+            paused[0].dispatchEvent(new ReelPhase(ReelPhase.MOVING, false,  moving[0].y - paused[0].height));
 
         }
 
@@ -279,7 +251,7 @@ package it.eurobet.games.slot.view.reels.components {
             container.limit = _gridHeight - TOLERANCE;
 
             // All the moving containers can stay the same y because the movement can start from the same position;
-            container.y = initialContainer.y - container.height;
+            container.y = initialContainer.y - (container.height * (i + 1));
 
             container.processQueue = true;
 
@@ -291,7 +263,7 @@ package it.eurobet.games.slot.view.reels.components {
 
         createWinningContainer();
 
-        winningContainer.limit = _gridHeight;
+        winningContainer.limit = _gridHeight - TOLERANCE;
         winningContainer.y = lastContainer.y - winningContainer.height;
 
         addChild(winningContainer);
@@ -343,9 +315,17 @@ package it.eurobet.games.slot.view.reels.components {
 
     }
 
-    private function itemsToMove(container:ReelItemContainer):int {
 
-        return int(_gridHeight / container.height) + 1;
+
+        private function itemsToMove(container:ReelItemContainer):int {
+
+        if(!_itemsToMove){
+
+            _itemsToMove = int(_gridHeight / container.height) + ADDITIONAL_ITEMS;
+
+        }
+
+        return _itemsToMove;
 
     }
 

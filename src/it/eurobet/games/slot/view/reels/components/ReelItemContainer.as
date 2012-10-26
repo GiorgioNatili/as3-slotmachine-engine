@@ -33,7 +33,7 @@ package it.eurobet.games.slot.view.reels.components {
         private var _id:String;
 
         public static const IS_MOVING:String = 'isMoving';
-        public static const IS_QUEUED:String = 'isQueued';
+        public static const IS_QUEUED:String = 'iQueued';
         public static const IS_PAUSED:String = 'isPaused';
         private var _itemDirty:Boolean;
 
@@ -43,7 +43,7 @@ package it.eurobet.games.slot.view.reels.components {
 
             _status = IS_QUEUED;
 
-            addEventListener(AnimateRenderData.DO_HANDLE, onAnimateRenderer);
+            addEventListener(AnimateRenderData.DO_HANDLE, onAnimationData);
             addEventListener(ReelPhase.MOVING, onReStartMoving);
             addEventListener(ReelPhase.INIT_MOVING, initMoving);
             addEventListener(ReelPhase.END_MOVING, onEndMoving);
@@ -69,7 +69,7 @@ package it.eurobet.games.slot.view.reels.components {
 
         }
 
-        private function onAnimateRenderer(instruction:AnimateRenderData):void {
+        private function onAnimationData(instruction:AnimateRenderData):void {
 
             _speed = instruction.reelTransition.speed;
             minDuration = instruction.reelTransition.minDuration;
@@ -79,8 +79,6 @@ package it.eurobet.games.slot.view.reels.components {
 
         private function initMoving(event:ReelPhase):void{
 
-
-            trace(ReelPhase.INIT_MOVING, _id)
             _status = IS_MOVING;
             addEventListener(Event.ENTER_FRAME, onMoving);
 
@@ -109,6 +107,18 @@ package it.eurobet.games.slot.view.reels.components {
 
             this.y += speed;
 
+            if(!_processQueue)return;
+
+            if(_itemDirty && this.y > _limit){
+
+                removeEventListener(Event.ENTER_FRAME, onMoving);
+                dispatchEvent(new ReelPhase(ReelPhase.REMOVE_FROM_QUEUE));
+
+                visible = false;
+                removeFromParent(true);
+
+            }
+
             if (this.y > _limit - height && !_itemDirty) {
 
                 dispatchEvent(new ReelPhase(ReelPhase.PROCESS_QUEUE));
@@ -121,19 +131,7 @@ package it.eurobet.games.slot.view.reels.components {
                 visible = false;
                 removeEventListener(Event.ENTER_FRAME, onMoving);
 
-                if(_itemDirty){
-
-                    trace(ReelPhase.REMOVE_FROM_QUEUE, _id)
-                    dispatchEvent(new ReelPhase(ReelPhase.REMOVE_FROM_QUEUE));
-
-                    visible = false;
-                    removeFromParent(true);
-
-                }else{
-
-                    dispatchEvent(new ReelPhase(ReelPhase.PROCESS_QUEUE));
-
-                }
+                dispatchEvent(new ReelPhase(ReelPhase.PROCESS_QUEUE));
 
             }
 
@@ -143,10 +141,12 @@ package it.eurobet.games.slot.view.reels.components {
 
             if(toggle){
 
+                _status = IS_PAUSED;
                 removeEventListener(Event.ENTER_FRAME, onMoving);
 
             }else{
 
+                _status = IS_MOVING;
                 addEventListener(Event.ENTER_FRAME, onMoving);
 
             }
