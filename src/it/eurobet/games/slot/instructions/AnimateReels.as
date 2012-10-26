@@ -46,6 +46,12 @@ package it.eurobet.games.slot.instructions {
 
         }
 
+        public function get winningSymbolTransition():TweenDescription{
+
+            return parameters[2] as TweenDescription;
+
+        }
+
         /**
          * @private
          */

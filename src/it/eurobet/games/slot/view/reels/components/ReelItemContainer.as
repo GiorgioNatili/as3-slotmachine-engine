@@ -8,10 +8,12 @@
 package it.eurobet.games.slot.view.reels.components {
 
     import com.gnstudio.nabiro.flash.components.SmartStarlingSprite;
+    import com.greensock.TimelineMax;
 
     import it.eurobet.core.IWillBeObserved;
     import it.eurobet.games.slot.instructions.AnimateRenderData;
     import it.eurobet.games.slot.instructions.AnimateSymbol;
+    import it.eurobet.games.slot.model.vos.TweenDescription;
     import it.eurobet.games.slot.view.reels.events.ReelPhase;
 
     import starling.display.Quad;
@@ -35,6 +37,7 @@ package it.eurobet.games.slot.view.reels.components {
         public static const IS_MOVING:String = 'isMoving';
         public static const IS_QUEUED:String = 'iQueued';
         public static const IS_PAUSED:String = 'isPaused';
+
         private var _itemDirty:Boolean;
 
         public function ReelItemContainer(items:Vector.<ReelItem>) {
@@ -52,7 +55,6 @@ package it.eurobet.games.slot.view.reels.components {
 
         private function onEndMoving(event:ReelPhase):void {
 
-            alpha = .5;
             addEventListener(Event.ENTER_FRAME, endMoving);
 
         }
@@ -61,11 +63,16 @@ package it.eurobet.games.slot.view.reels.components {
 
             this.y += speed;
 
-            if (this.y > _limit - height) {
+            if (this.y > -height) {
 
                 removeEventListener(Event.ENTER_FRAME, endMoving);
+                dispatchEvent(new ReelPhase(ReelPhase.FINAL_TRANSITION));
 
             }
+
+        }
+
+        private function onTweenComplete():void {
 
         }
 

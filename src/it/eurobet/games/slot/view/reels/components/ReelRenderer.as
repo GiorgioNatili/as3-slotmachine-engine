@@ -42,7 +42,7 @@ package it.eurobet.games.slot.view.reels.components {
     private var reelItems:Dictionary;
 
     private const EASING_SPEED:Number = .9;
-    private const END_EASING_SPEED:Number = .9;
+    private const END_EASING_SPEED:Number = 1.2;
 
     private var textures:TexturesLoader;
     private var reelTransition:TweenDescription;
@@ -65,6 +65,7 @@ package it.eurobet.games.slot.view.reels.components {
     private const ADDITIONAL_ITEMS:int = 2;
     private var _timer:Timer;
     private var _itemsToMove:int;
+    private var winningReelsTransition:TweenDescription;
 
     public function ReelRenderer(data:TexturesLoader) {
 
@@ -79,9 +80,32 @@ package it.eurobet.games.slot.view.reels.components {
         addEventListener(ReelPhase.ADDED_TO_QUEUE, onCandidateReceived);
         addEventListener(ReelPhase.PROCESS_QUEUE, onProcessQueue);
         addEventListener(ReelPhase.REMOVE_FROM_QUEUE, onRemoveCandidate);
+        addEventListener(ReelPhase.FINAL_TRANSITION, onFinalTransition);
 
     }
 
+    private function onFinalTransition(event:ReelPhase):void {
+
+        movingContainers[0].pause();
+
+        var endItems:Vector.<ReelItemContainer> = new Vector.<ReelItemContainer>(2);
+
+        endItems[0] = movingContainers[0];
+        endItems[1] = winningContainer;
+
+        var initTween:TimelineMax = new TimelineMax({onComplete: endTweenCompleted});
+
+        for each(var item:ReelItemContainer in endItems) {
+
+            initTween.insert(new winningReelsTransition.tweener(item, END_EASING_SPEED, {y: item.y + item.height, ease: winningReelsTransition.easing}));
+
+        }
+
+        initTween.play();
+
+    }
+
+    // TODO check if it can be deleted
     private function onRemoveCandidate(event:ReelPhase):void {
 
         var count:int = 0;
@@ -204,6 +228,7 @@ package it.eurobet.games.slot.view.reels.components {
 
         reelTransition = instruction.reelTransition;
         reelsOrder = instruction.reelsOrder;
+        winningReelsTransition = instruction.winningSymbolTransition;
 
         var initTween:TimelineMax = new TimelineMax({onComplete: initTweenCompleted});
 
@@ -232,6 +257,11 @@ package it.eurobet.games.slot.view.reels.components {
             _timer = null;
 
         }
+
+    }
+
+    private function endTweenCompleted():void {
+
 
     }
 

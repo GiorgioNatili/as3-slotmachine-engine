@@ -9,6 +9,8 @@ package it.eurobet.games.slot.services {
 
     import com.greensock.TweenMax;
     import com.greensock.easing.Back;
+    import com.greensock.easing.Linear;
+    import com.greensock.easing.Bounce;
 
     import flash.events.Event;
     import flash.events.EventDispatcher;
@@ -31,7 +33,7 @@ package it.eurobet.games.slot.services {
         private const WINNING_LINE:String = 'winningLine';
 
         // Index 0 and 1 are reserved, add new class references only at the end of the array
-        private const TRANSITIONS:Array = [Tween, Transitions, TweenMax, Back];
+        private const TRANSITIONS:Array = [Tween, Transitions, TweenMax, Back, Linear, Bounce];
 
         public function TransitionProvider(data:XMLList) {
 

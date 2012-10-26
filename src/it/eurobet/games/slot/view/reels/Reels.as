@@ -186,7 +186,7 @@ package it.eurobet.games.slot.view.reels {
         }
 
         var reelsOrder:Array = new OrderProvider(tot).build();
-        _origin.dispatchEvent(new SlotInstructionEvent('AnimateReels', [reelTransition, reelsOrder]));
+        _origin.dispatchEvent(new SlotInstructionEvent('AnimateReels', [reelTransition, reelsOrder, winningSymbolTransition]));
 
     }
 
