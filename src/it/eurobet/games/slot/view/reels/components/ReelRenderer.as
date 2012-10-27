@@ -42,7 +42,7 @@ package it.eurobet.games.slot.view.reels.components {
     private var reelItems:Dictionary;
 
     private const EASING_SPEED:Number = .9;
-    private const END_EASING_SPEED:Number = 1.2;
+    private const END_EASING_SPEED:Number = 2.2;
 
     private var textures:TexturesLoader;
     private var reelTransition:TweenDescription;
@@ -86,18 +86,26 @@ package it.eurobet.games.slot.view.reels.components {
 
     private function onFinalTransition(event:ReelPhase):void {
 
-        movingContainers[0].pause();
+        lastMovingContainer.pause();
 
-        var endItems:Vector.<ReelItemContainer> = new Vector.<ReelItemContainer>(2);
+        var endItems:Vector.<ReelItemContainer> = new Vector.<ReelItemContainer>(3);
 
-        endItems[0] = movingContainers[0];
+        endItems[0] = lastMovingContainer;
         endItems[1] = winningContainer;
+
+        var container = createMovingContainer();
+        container.y =  winningContainer.y - container.height;
+        container.alpha = .4;
+
+        addChild(container);
+
+        endItems[2] = container;
 
         var initTween:TimelineMax = new TimelineMax({onComplete: endTweenCompleted});
 
         for each(var item:ReelItemContainer in endItems) {
 
-            initTween.insert(new winningReelsTransition.tweener(item, END_EASING_SPEED, {y: item.y + item.height, ease: winningReelsTransition.easing}));
+            initTween.insert(new winningReelsTransition.tweener(item, winningReelsTransition.speed || END_EASING_SPEED, {y: item.y + item.height, ease: winningReelsTransition.easing}));
 
         }
 
@@ -122,12 +130,6 @@ package it.eurobet.games.slot.view.reels.components {
             }
 
             count++;
-
-        }
-
-        if(movingContainers.length <= 1){
-
-            // Inject the final animation
 
         }
 
@@ -156,14 +158,35 @@ package it.eurobet.games.slot.view.reels.components {
 
         event.target.removeEventListener(event.type, arguments.callee);
 
-        winningContainer.y =  movingContainers[movingContainers.length - 1].y - winningContainer.height;
+        winningContainer.y = lastMovingContainer.y - winningContainer.height;
         winningContainer.dispatchEvent(new ReelPhase(ReelPhase.END_MOVING));
 
         for each(var item:ReelItemContainer in movingContainers){
 
-            item.remove();
+            // item.alpha = .5;
+            item.remove()
 
         }
+
+    }
+
+    private function get lastMovingContainer():ReelItemContainer{
+
+        var value:Vector.<ReelItemContainer> =  movingContainers.sort(function(a:ReelItemContainer, b:ReelItemContainer):Number{
+
+           if(a.y > b.y){
+
+               return 1;
+
+           }else{
+
+               return -1;
+
+           }
+
+        });
+
+        return value[0];
 
     }
 
@@ -199,14 +222,9 @@ package it.eurobet.games.slot.view.reels.components {
         statusToCheck = ReelItemContainer.IS_MOVING;
         var moving:Vector.<ReelItemContainer> = movingContainers.filter(recoverItems);
 
-    //    trace('queued', queued.length);
-    //    trace('paused', paused.length);
-    //    trace('moving', moving.length);
-    //    trace('----')
-
         if(paused.length > 0 && moving.length < itemsToMove(moving[0])){
 
-            paused[0].dispatchEvent(new ReelPhase(ReelPhase.MOVING, false,  moving[0].y - paused[0].height));
+            paused[0].dispatchEvent(new ReelPhase(ReelPhase.MOVING, false,  lastMovingContainer.y - paused[0].height));
 
         }
 
@@ -347,7 +365,7 @@ package it.eurobet.games.slot.view.reels.components {
 
 
 
-        private function itemsToMove(container:ReelItemContainer):int {
+    private function itemsToMove(container:ReelItemContainer):int {
 
         if(!_itemsToMove){
 

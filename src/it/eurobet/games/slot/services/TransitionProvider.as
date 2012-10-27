@@ -49,7 +49,7 @@ package it.eurobet.games.slot.services {
 
             var description:TweenDescription = new TweenDescription();
 
-            description.speed = int(current.@speed.toXMLString());
+            description.speed = Number(current.@speed.toXMLString());
             description.minDuration = int(current.@duration.toXMLString());
             current.@random.toXMLString() == 'true' ? description.isRandom = true : description.isRandom = false;
             description.easing = parseEasing(current.@easing.toXMLString(), current.@ease.toXMLString());
