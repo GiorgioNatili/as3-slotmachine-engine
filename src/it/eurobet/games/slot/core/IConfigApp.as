@@ -19,6 +19,8 @@ public interface IConfigApp extends IEventDispatcher{
     function get transitions():XMLList;
     function get symbolsTexture():String;
     function get symbolsTextureInfo():String;
+    function get winningLinesTexture():String;
+    function get winningLinesTextureInfo():String;
     function get background():String;
 }
 }

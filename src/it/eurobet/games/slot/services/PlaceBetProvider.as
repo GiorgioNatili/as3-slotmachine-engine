@@ -21,6 +21,7 @@ package it.eurobet.games.slot.services {
         private var eventDispatcher:EventDispatcher;
         private var _source:String;
         private var _winningItems:Array;
+        private var _winningLine:int;
 
         public function PlaceBetProvider(source:String) {
 
@@ -56,11 +57,29 @@ package it.eurobet.games.slot.services {
             event.target.removeEventListener(event.type, arguments.callee);
 
             var data:XML = new XML(event.target.data);
+
             _winningItems = data.@RESULT.toXMLString().split(',');
+            _winningLine = int(data.WINLINE.@ID.toXMLString())
 
             dispatchEvent(new PlaceBetData(PlaceBetData.READY));
 
         }
+
+        public function get winningLine():int{
+
+            return _winningLine;
+
+        }
+
+        public function get winningItems():Array {
+
+            return _winningItems;
+
+        }
+
+        /******************************************
+         * IEventDispatcher Implementation
+         ******************************************/
 
         public function hasEventListener(type:String):Boolean {
 
@@ -92,8 +111,5 @@ package it.eurobet.games.slot.services {
 
         }
 
-        public function get winningItems():Array {
-            return _winningItems;
-        }
     }
 }

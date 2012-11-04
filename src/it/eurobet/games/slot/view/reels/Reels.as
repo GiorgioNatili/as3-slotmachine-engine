@@ -32,6 +32,7 @@ package it.eurobet.games.slot.view.reels {
     import it.eurobet.games.slot.services.parsers.OddRowParser;
     import it.eurobet.games.slot.view.reels.events.ReelsStatus;
     import it.eurobet.games.slot.view.reels.helpers.OrderProvider;
+    import it.eurobet.games.slot.view.reels.helpers.WinningLinesFinder;
 
     internal class Reels extends Presenter{
 
@@ -50,6 +51,7 @@ package it.eurobet.games.slot.view.reels {
     private var _reelDistance:int;
     private const SYMBOL_HEIGHT:int = 120;
     private var winningSymbols:Array;
+    private var winningLine:int;
 
     public function Reels(v:IStarlingView) {
 
@@ -70,7 +72,8 @@ package it.eurobet.games.slot.view.reels {
 
     private function onSpinReels(instruction:SpinReels):void {
 
-        winningSymbols = instruction.parameters;
+        winningSymbols = instruction.winningItems;
+        winningLine = instruction.winningLine;
 
         spin();
 
@@ -156,6 +159,9 @@ package it.eurobet.games.slot.view.reels {
         var tot:int = currentReels.length;
         var winningCount:int = 0;
 
+        var finder:WinningLinesFinder = new WinningLinesFinder(winningLines);
+        var winningLine:WinningLine = finder.getLineByID(winningLine);
+
         for (var i:int = 0; i < tot; i++){
 
             var parser:IProcessSequence = getParser();
@@ -168,6 +174,7 @@ package it.eurobet.games.slot.view.reels {
             value.winning = reelProvider.winning(winningCount, grid.rows);
             value.moving = reelProvider.moving;
             value.heading = reelProvider.currents(2);
+            (i < winningLine.coordinates.length) ? value.winningCoordinates = winningLine.coordinates[i] : value.winningCoordinates =  null;
 
             winningCount += grid.rows;
             winningCount -= 1;

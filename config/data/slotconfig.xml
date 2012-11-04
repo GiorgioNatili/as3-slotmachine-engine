@@ -9,8 +9,11 @@
     <property id="assetsFile" value="slotAssets_mini.swf"/>
     <property id="symbolsTexture" value="symbols/symbolsAssets.png"/>
     <property id="symbolsTextureInfo" value="symbols/symbolsAssets.xml"/>
+    <property id="winningLinesTexture" value="symbols/symbolsAnimationsAssets.png"/>
+    <property id="winningLinesTextureInfo" value="symbols/symbolsAnimationsAssets.xml"/>
     <property id="gridInfo" value="9|6"/>
     <property id="reverseProxy" value="http://www.actionscript.it"/>
+    <property id="winningLineColor" value="" random = "true"/>
 
     <property id='transitions'>
         <transition id='reel' duration='3' random='true' speed = '30' easing = 'com.greensock.easing.Back' ease='easeOut' plugin='com.greensock.TweenMax'/>

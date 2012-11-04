@@ -22,6 +22,7 @@ package it.eurobet.games.slot.core {
     import it.eurobet.games.slot.instructions.SpinReels;
     import it.eurobet.games.slot.instructions.TexturesReadyToBuild;
     import it.eurobet.games.slot.instructions.UpdateReels;
+    import it.eurobet.games.slot.instructions.WinningTexturesReadyToBuild;
     import it.eurobet.ui.ModalWindow;
 
 public class SlotMapper extends Mapper{
@@ -31,6 +32,7 @@ public class SlotMapper extends Mapper{
     private var shareSlotAssets:ShareSlotAssets;
     private var initTransitions:InitTransitions;
     private var texturesReadyToBuild:TexturesReadyToBuild;
+    private var winningTexturesReadyToBuild:WinningTexturesReadyToBuild;
     private var spinReels:SpinReels;
     private var updateReels:UpdateReels;
     private var animateReels:AnimateReels;

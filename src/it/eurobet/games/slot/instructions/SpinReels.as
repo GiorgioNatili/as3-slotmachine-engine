@@ -33,6 +33,18 @@ package it.eurobet.games.slot.instructions {
 
         }
 
+        public function get winningLine():int{
+
+            return parameters[1];
+
+        }
+
+        public function get winningItems():Array{
+
+            return parameters[0] as Array;
+
+        }
+
         /**
          * @private
          */

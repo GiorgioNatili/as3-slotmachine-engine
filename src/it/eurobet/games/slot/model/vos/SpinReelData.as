@@ -12,6 +12,7 @@ package it.eurobet.games.slot.model.vos {
         private var _winning:Vector.<String>;
         private var _moving:Vector.<String>;
         private var _heading:Vector.<String>;
+        private var _winningCoordinates:Coordinates;
 
         public function SpinReelData() {
         }
@@ -38,6 +39,14 @@ package it.eurobet.games.slot.model.vos {
 
         public function set heading(value:Vector.<String>):void {
             _heading = value;
+        }
+
+        public function set winningCoordinates(winningCoordinates:Coordinates):void {
+            _winningCoordinates = winningCoordinates;
+        }
+
+        public function get winningCoordinates():Coordinates {
+            return _winningCoordinates;
         }
     }
 }

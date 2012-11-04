@@ -26,16 +26,17 @@ package it.eurobet.games.slot.view.reels.components {
     public class ReelItem extends SmartStarlingSprite implements IWillBeObserved {
 
         private var label:TextField;
-        private var symbol:String;
+        private var _symbolID:String;
         private var symbolRender:Symbol;
         private var limit:Number;
         private var _speed:Number;
+        private var _showID:Boolean;
 
         private const SYMBOL_TRANSITION_SPEED:Number = .3;
 
         public function ReelItem(data:String, renderer:Symbol) {
 
-            symbol = data;
+            _symbolID = data;
             symbolRender = renderer;
             _speed = 12;
 
@@ -45,16 +46,25 @@ package it.eurobet.games.slot.view.reels.components {
 
         protected function renderSymbol():void {
 
-            label = new TextField(22, 22, symbol);
+            if(_showID){
 
-            if (symbol) {
-
-                addChild(label);
+                drawID();
 
             }
 
             addChild(symbolRender);
 
+        }
+
+        private function drawID():void {
+
+            label = new TextField(22, 22, _symbolID);
+
+            if (_symbolID) {
+
+                addChild(label);
+
+            }
         }
 
         override protected function init():void {
@@ -90,6 +100,18 @@ package it.eurobet.games.slot.view.reels.components {
         public function set speed(value:Number):void{
 
             _speed = value;
+
+        }
+
+        public function set showID(value:Boolean):void{
+
+            _showID = value;
+
+        }
+
+        public function get symbolID():String {
+
+            return _symbolID;
 
         }
     }

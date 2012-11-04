@@ -11,13 +11,18 @@ package it.eurobet.games.slot.view.reels.components {
     import com.greensock.TimelineMax;
 
     import it.eurobet.core.IWillBeObserved;
+    import it.eurobet.core.TexturesLoader;
     import it.eurobet.games.slot.instructions.AnimateRenderData;
     import it.eurobet.games.slot.instructions.AnimateSymbol;
+    import it.eurobet.games.slot.model.vos.Coordinates;
     import it.eurobet.games.slot.model.vos.TweenDescription;
     import it.eurobet.games.slot.view.reels.events.ReelPhase;
 
+    import starling.core.Starling;
+    import starling.display.MovieClip;
     import starling.display.Quad;
     import starling.events.Event;
+    import starling.textures.TextureAtlas;
 
     public class ReelItemContainer extends SmartStarlingSprite implements IWillBeObserved {
 
@@ -269,11 +274,48 @@ package it.eurobet.games.slot.view.reels.components {
         }
 
         public function get id():String {
+
             return _id;
+
         }
 
         public function set id(value:String):void {
+
             _id = value;
+
+        }
+
+        public function winning(winningCoordinates:Coordinates, winningTextures:TexturesLoader):void {
+
+            unflatten();
+            var item:ReelItem;
+
+             if(winningCoordinates){
+
+                 item = reelItems[winningCoordinates.row];
+
+                 trace('Going to animate the symbol' , item.symbolID, 'in position', winningCoordinates.row);
+
+                 var mc:MovieClip = new MovieClip(winningTextures.texturesAtlas.getTextures(/*item.symbolID*/'H'), 60);
+
+                 mc.loop = false;
+                 mc.x = item.x;
+                 mc.y = item.y;
+
+                 mc.addEventListener(Event.COMPLETE, function(e:Event):void{
+
+                     mc.visible = false;
+                     Starling.juggler.remove(mc);
+                     mc.removeFromParent(true);
+
+                 });
+
+                 addChild(mc);
+
+                 Starling.juggler.add(mc);
+
+             }
+
         }
     }
 

@@ -62,7 +62,9 @@ package it.eurobet.games.slot.view.slot {
 
             event.target.removeEventListener(event.type, arguments.callee);
 
-            _origin.dispatchEvent(new SlotInstructionEvent('SpinReels', (event.target as PlaceBetProvider).winningItems));
+            var provider:PlaceBetProvider = (event.target as PlaceBetProvider);
+
+            _origin.dispatchEvent(new SlotInstructionEvent('SpinReels', [provider.winningItems, provider.winningLine]));
 
         }
 

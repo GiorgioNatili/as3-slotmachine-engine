@@ -17,6 +17,7 @@ package it.eurobet.games.slot.view.reels {
     import it.eurobet.events.CommandCallEvent;
     import it.eurobet.games.slot.commands.HideStarlingItems;
     import it.eurobet.games.slot.instructions.TexturesReadyToBuild;
+    import it.eurobet.games.slot.instructions.WinningTexturesReadyToBuild;
     import it.eurobet.games.slot.model.vos.SpinReelData;
     import it.eurobet.games.slot.view.reels.components.ReelItem;
     import it.eurobet.games.slot.view.reels.components.ReelRenderer;
@@ -32,6 +33,7 @@ package it.eurobet.games.slot.view.reels {
 
     private var reelsFinder:ReelsFinder;
     private var textures:TexturesLoader;
+    private var winningTextures:TexturesLoader;
 
     public function ReelsView() {
 
@@ -39,12 +41,20 @@ package it.eurobet.games.slot.view.reels {
         presenter.addEventListener(ReelsStatus.REELS_READY, onReelsReady);
 
         addEventListener(TexturesReadyToBuild.DO_HANDLE, onTexturesReadyToBuild);
+        addEventListener(WinningTexturesReadyToBuild.DO_HANDLE, onWinningTexturesReadyToBuild);
+
+    }
+
+    private function onWinningTexturesReadyToBuild(instruction:WinningTexturesReadyToBuild):void {
+
+        winningTextures = instruction.textures;
+        winningTextures.buildTextures();
 
     }
 
     private function onTexturesReadyToBuild(instruction:TexturesReadyToBuild):void {
 
-        textures = instruction.parameters;
+        textures = instruction.textures;
         textures.buildTextures();
 
     }
@@ -57,7 +67,7 @@ package it.eurobet.games.slot.view.reels {
 
     public function addReel(value:Vector.<String>, position:Point, gridHeight:Number):void {
 
-        var reel:ReelRenderer = new ReelRenderer(textures);
+        var reel:ReelRenderer = new ReelRenderer(textures, winningTextures);
 
         reel.x = position.x;
         reel.y = position.y;
@@ -85,7 +95,6 @@ package it.eurobet.games.slot.view.reels {
         dispatchEvent(new CommandCallEvent(CommandCallEvent.COMMAND, actions));
 
         reel.value = value;
-
 
     }
 

@@ -76,6 +76,23 @@ public class AppConfig implements IConfigApp{
 
     }
 
+    public function get winningLineRandomColor():Boolean{
+
+        var value:Boolean;
+        var returned:String = configData.(@id == 'winningLineColor').@random.toXMLString();
+
+        returned == 'true' ? value = true : value = false;
+
+        return value;
+
+    }
+
+    public function get winningLineColor():uint{
+
+        return uint(configData.(@id == 'winningLineColor').@value.toXMLString());
+
+    }
+
     public function get multistage():Boolean {
 
         var value:Boolean;
@@ -99,15 +116,27 @@ public class AppConfig implements IConfigApp{
 
     }
 
-    public function get background():String {
-
-        return configData.(@id == 'background').@value.toXMLString();
-
-    }
-
     public function get symbolsTextureInfo():String {
 
         return configData.(@id == 'symbolsTextureInfo').@value.toXMLString();
+
+    }
+
+    public function get winningLinesTexture():String {
+
+        return configData.(@id == 'winningLinesTexture').@value.toXMLString();
+
+    }
+
+    public function get winningLinesTextureInfo():String {
+
+        return configData.(@id == 'winningLinesTextureInfo').@value.toXMLString();
+
+    }
+
+    public function get background():String {
+
+        return configData.(@id == 'background').@value.toXMLString();
 
     }
 

@@ -66,6 +66,9 @@ package it.eurobet.games.slot {
         private var slot:Starling;
         private var container:Sprite;
 
+        private var winningTextures:TexturesLoader;
+        private var textures:TexturesLoader;
+
         // private var reelsView:ReelsView;
 
         public function Main() {
@@ -162,7 +165,7 @@ package it.eurobet.games.slot {
 
             */
 
-            var textures:TexturesLoader = new TexturesLoader(appConfig.assetsPath + appConfig.symbolsTextureInfo, appConfig.assetsPath + appConfig.symbolsTexture);
+            textures = new TexturesLoader(appConfig.assetsPath + appConfig.symbolsTextureInfo, appConfig.assetsPath + appConfig.symbolsTexture);
 
             textures.addEventListener(TexturesLoadEvent.TEXTURES_DATA_READY, onTexturesReady);
             textures.addEventListener(TexturesLoadEvent.SOURCE_LOADING_ERROR, onTexturesSourceError);
@@ -225,11 +228,26 @@ package it.eurobet.games.slot {
 
             event.target.removeEventListener(event.type, arguments.callee);
 
+            winningTextures = new TexturesLoader(appConfig.assetsPath + appConfig.winningLinesTextureInfo, appConfig.assetsPath + appConfig.winningLinesTexture);
+
+            winningTextures.addEventListener(TexturesLoadEvent.TEXTURES_DATA_READY, onWinningTexturesReady);
+            winningTextures.addEventListener(TexturesLoadEvent.SOURCE_LOADING_ERROR, onWinningTexturesSourceError);
+            winningTextures.addEventListener(TexturesLoadEvent.INFO_LOADING_ERROR, onWinningTexturesInfoError);
+
+            winningTextures.init();
+
+        }
+
+        private function onWinningTexturesReady(event:TexturesLoadEvent):void {
+
+            event.target.removeEventListener(event.type, arguments.callee);
+
             // Assets that are not part of startling
             dispatchEvent(new SlotInstructionEvent('ShareSlotAssets', builder));
 
             // Assets that are used in starling
-            dispatchEvent(new SlotInstructionEvent('TexturesReadyToBuild', event.target as TexturesLoader));
+            dispatchEvent(new SlotInstructionEvent('TexturesReadyToBuild', textures));
+            dispatchEvent(new SlotInstructionEvent('WinningTexturesReadyToBuild', winningTextures));
 
             // Data needed to build the slot
             var value:SlotDataProvider = new SlotDataProvider(dataReader);
@@ -290,6 +308,20 @@ package it.eurobet.games.slot {
                 container.y = (stage.stageHeight - container.height) / 2;
 
             }
+
+        }
+
+        private function onWinningTexturesInfoError(event:TexturesLoadEvent):void {
+
+            event.target.removeEventListener(event.type, arguments.callee);
+            throw new TextureErrors('Unable to load the winning texture info (e.g. the XML)', 40);
+
+        }
+
+        private function onWinningTexturesSourceError(event:TexturesLoadEvent):void {
+
+            event.target.removeEventListener(event.type, arguments.callee);
+            throw new TextureErrors('Unable to load the winning texture source (i.e. the PNG)', 30);
 
         }
 

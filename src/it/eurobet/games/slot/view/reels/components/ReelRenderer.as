@@ -9,11 +9,9 @@ package it.eurobet.games.slot.view.reels.components {
 
     import com.gnstudio.nabiro.flash.components.SmartStarlingSprite;
     import com.greensock.TimelineMax;
-    import com.greensock.TweenMax;
 
     import flash.display.DisplayObject;
     import flash.events.TimerEvent;
-    import flash.trace.Trace;
     import flash.utils.Dictionary;
     import flash.utils.Timer;
 
@@ -22,17 +20,11 @@ package it.eurobet.games.slot.view.reels.components {
     import it.eurobet.core.TexturesLoader;
     import it.eurobet.games.slot.events.SlotInstructionEvent;
     import it.eurobet.games.slot.instructions.AnimateReels;
-    import it.eurobet.games.slot.model.entities.Reel;
+    import it.eurobet.games.slot.model.vos.Coordinates;
     import it.eurobet.games.slot.model.vos.SpinReelData;
     import it.eurobet.games.slot.model.vos.TweenDescription;
-    import it.eurobet.games.slot.view.reels.components.ReelItem;
-    import it.eurobet.games.slot.view.reels.components.ReelItemContainer;
     import it.eurobet.games.slot.view.reels.events.ReelPhase;
-    import it.eurobet.games.slot.view.reels.events.ReelsStatus;
     import it.eurobet.games.slot.view.reels.helpers.CleanAndCloneItems;
-    import it.eurobet.utils.VectorRandomizer;
-
-    import starling.display.Quad;
 
     public class ReelRenderer extends SmartStarlingSprite implements IWillBeObserved{
 
@@ -45,6 +37,7 @@ package it.eurobet.games.slot.view.reels.components {
     private const END_EASING_SPEED:Number = 2.2;
 
     private var textures:TexturesLoader;
+    private var winningTextures:TexturesLoader;
     private var reelTransition:TweenDescription;
     private var reelsOrder:Array;
 
@@ -67,9 +60,10 @@ package it.eurobet.games.slot.view.reels.components {
     private var _itemsToMove:int;
     private var winningReelsTransition:TweenDescription;
 
-    public function ReelRenderer(data:TexturesLoader) {
+    public function ReelRenderer(data:TexturesLoader, winning:TexturesLoader) {
 
         textures = data;
+        winningTextures = winning;
 
         reelItems = new Dictionary(true);
 
@@ -85,6 +79,8 @@ package it.eurobet.games.slot.view.reels.components {
     }
 
     private function onFinalTransition(event:ReelPhase):void {
+
+        event.stopImmediatePropagation();
 
         lastMovingContainer.pause();
 
@@ -106,10 +102,18 @@ package it.eurobet.games.slot.view.reels.components {
         for each(var item:ReelItemContainer in endItems) {
 
             initTween.insert(new winningReelsTransition.tweener(item, winningReelsTransition.speed || END_EASING_SPEED, {y: item.y + item.height, ease: winningReelsTransition.easing}));
+            trace(item.y + item.height);
 
         }
 
         initTween.play();
+
+    }
+
+    private function endTweenCompleted():void {
+
+        trace(spinReelData.winningCoordinates);
+        winningContainer.winning(spinReelData.winningCoordinates, winningTextures);
 
     }
 
@@ -275,11 +279,6 @@ package it.eurobet.games.slot.view.reels.components {
             _timer = null;
 
         }
-
-    }
-
-    private function endTweenCompleted():void {
-
 
     }
 
